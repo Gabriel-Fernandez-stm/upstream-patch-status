@@ -1,6 +1,6 @@
 # UPSTREAM — suivi des séries kernel STM32MP
 
-_Généré le 2026-10-26 16:13 par le skill `b4-upstream-tracker` — ne pas éditer à la main : `python3 .github/skills/b4-upstream-tracker/scripts/b4_dashboard.py`. STATUS, COMMENTS et TODO viennent des fiches ; versions envoyées et Patchwork viennent de b4 et Patchwork._
+_Généré le 2026-10-26 16:20 par le skill `b4-upstream-tracker` — ne pas éditer à la main : `python3 .github/skills/b4-upstream-tracker/scripts/b4_dashboard.py`. STATUS, COMMENTS et TODO viennent des fiches ; versions envoyées et Patchwork viennent de b4 et Patchwork._
 
 ## Vue d'ensemble
 
@@ -11,10 +11,6 @@ _Généré le 2026-10-26 16:13 par le skill `b4-upstream-tracker` — ne pas éd
 | STM32MP15 | 0 | 1 | 0 | 0 | 1 |
 | STM32MP21 | 0 | 0 | 0 | 0 | 0 |
 | STM32MP25 | 1 | 2 | 0 | 0 | 3 |
-
-## À traiter
-
-- ⚠ **ups_mp15_clk_update** : fiche manquante → `/b4-upstream-tracker create b4/ups_mp15_clk_update`
 
 ## STM32MP (commun)
 
@@ -33,7 +29,7 @@ _Généré le 2026-10-26 16:13 par le skill `b4-upstream-tracker` — ne pas éd
 
 | Série | Titre (cover) | Version | STATUS | Patchwork (dernière version envoyée) | Dernier commentaire | TODO |
 |---|---|---|---|---|---|---|
-| ups_mp15_clk_update ⚠ fiche manquante | clk: stm32mp1: add I2S_CKIN as PLL4 source and keep boot-enabled clocks running | v1 envoyée · v2 en cours | 📤 V1 SENT | [3×new](https://patchwork.kernel.org/series/1189603/) ⏳ | — | — |
+| [ups_mp15_clk_update](./ups_mp15_clk_update.md) | clk: stm32mp1: add I2S_CKIN as PLL4 source and keep boot-enabled clocks running | v1 envoyée · v2 en cours | 📤 V1 SENT | [3×new](https://patchwork.kernel.org/series/1189603/) ⏳ | 2026-10-26 [v1] Gabriel Fernandez : erreur à l'envoi de la v1 — `Subject: [PATCH 0/3] ` c… | 5 |
 
 ## STM32MP21
 
