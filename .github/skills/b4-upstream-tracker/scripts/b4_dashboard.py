@@ -212,7 +212,7 @@ def build_rows(repo, workspace, exclude, offline):
         with ThreadPoolExecutor(max_workers=4) as pool:
             for row, pw in zip(todo, pool.map(lambda r: pw_safe(r["series"]["sent"][r["sent"]][0]), todo)):
                 row["pw"] = pw
-    return rows, [b for b in branches if b not in kept]
+    return rows
 
 
 def version_label(row):
@@ -257,7 +257,7 @@ def attention_items(rows):
     return items
 
 
-def render(rows, ignored, args):
+def render(rows, args):
     out_dir = os.path.dirname(os.path.abspath(args.output))
     groups = {}
     for r in rows:
@@ -299,8 +299,6 @@ def render(rows, ignored, args):
         ]
         lines += [render_row(r, out_dir, args.workspace, args.offline) for r in sorted(groups[key], key=lambda r: r["name"])]
 
-    if ignored:
-        lines += ["", f"_Branches ignorées (backup/old) : {', '.join(b.removeprefix('b4/') for b in ignored)}._"]
     return "\n".join(lines) + "\n"
 
 
@@ -317,10 +315,10 @@ def main():
     args.workspace = os.path.expanduser(args.workspace)
     args.output = os.path.expanduser(args.output or os.path.join(args.workspace, "UPSTREAM.md"))
 
-    rows, ignored = build_rows(args.repo, args.workspace, args.exclude, args.offline)
+    rows = build_rows(args.repo, args.workspace, args.exclude, args.offline)
     if not rows:
         sys.exit(f"ERREUR: aucune branche b4/* dans {args.repo}")
-    content = render(rows, ignored, args)
+    content = render(rows, args)
     if args.stdout:
         print(content, end="")
         return
