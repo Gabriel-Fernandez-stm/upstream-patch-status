@@ -3,12 +3,14 @@
 
 Sources :
   - branches b4/* du repo kernel (suivi b4 lu dans le commit de cover, sans checkout)
-  - fiches <série>.md du workspace (STATUS, SOC, COMMENTS, TODO)
+  - fiches <série>.md du workspace (STATUS, SOC, COMMENTS, TODO) ; celles marquées `| Suivi | manuel (hors b4)`
+    (séries envoyées sans b4) sont ajoutées à partir de leur propre zone auto
   - Patchwork (états, checks, tags, nombre de commentaires de la dernière version envoyée)
 
 Usage: b4_dashboard.py [--repo PATH] [--workspace DIR] [--output FILE] [--offline] [--stdout]
 """
 import argparse
+import glob
 import json
 import os
 import re
@@ -32,6 +34,7 @@ SOCS = {
     "MP25": "STM32MP25",
 }
 TRACKING_RE = re.compile(r"--- b4-submit-tracking ---\n(?:#.*\n)?(\{.*?\n\})", re.S)
+MANUAL_RE = re.compile(r"^\| Suivi \| manuel", re.M)
 TRAILER_RE = re.compile(r"^(Reviewed|Acked|Tested|Reported|Suggested)-by:", re.M)
 CHECK_RANK = {"success": 0, "pending": 1, "warning": 2, "fail": 3}
 CHECK_ICON = {"success": "✅", "pending": "⏳", "warning": "⚠️", "fail": "❌"}
@@ -111,7 +114,14 @@ def pw_collect(msgid):
     if not entries:
         return None
 
-    primary = max(entries, key=lambda e: sum(p["state"] not in IGNORED_STATES for p in e["patches"]))
+    # À égalité, le projet dont les patches ont avancé (accepted…) l'emporte sur celui resté en `new`.
+    primary = max(
+        entries,
+        key=lambda e: (
+            sum(p["state"] not in IGNORED_STATES for p in e["patches"]),
+            sum(p["state"] not in IGNORED_STATES | {"new"} for p in e["patches"]),
+        ),
+    )
     ordered = [primary] + [e for e in entries if e is not primary]
     by_name = {}
     for entry in ordered:
@@ -182,14 +192,41 @@ def cell(text, limit=0):
     return text if not limit or len(text) <= limit else text[: limit - 1] + "…"
 
 
+def read_manual_series(path):
+    """Série envoyée hors b4 : titre, révision et versions envoyées lus dans la zone auto de la fiche."""
+    with open(path, encoding="utf-8") as fh:
+        text = fh.read()
+    if not MANUAL_RE.search(text):
+        return None
+    title = re.search(r"^\| Titre \(cover\) \| (.*?) \|$", text, re.M)
+    sent = {int(v): [msgid] for v, msgid in re.findall(r"^\| v(\d+) \| [^|]*\| `([^`]+)` \|", text, re.M)}
+    revision = re.search(r"^\| Révision courante \| v(\d+)", text, re.M)
+    return {
+        "title": title.group(1) if title else "",
+        "revision": int(revision.group(1)) if revision else max(sent, default=1),
+        "sent": sent,
+    }
+
+
+def manual_entries(workspace, known):
+    """Fiches marquées `| Suivi | manuel (hors b4)` : pas de branche b4/*, la fiche fait foi."""
+    entries = []
+    for path in sorted(glob.glob(os.path.join(workspace, "*.md"))):
+        name = os.path.basename(path)[:-3]
+        series = None if name == "UPSTREAM" or name in known else read_manual_series(path)
+        if series:
+            entries.append((name, name, series))
+    return entries
+
+
 def build_rows(repo, workspace, exclude, offline):
     branches = git(repo, "branch", "--list", "b4/*", "--format=%(refname:short)").split()
     kept = [b for b in branches if not re.search(exclude, b)]
+    entries = [(b.removeprefix("b4/"), b, read_series(repo, b)) for b in kept]
+    entries += manual_entries(workspace, {name for name, _, _ in entries})
     rows = []
-    for branch in kept:
-        name = branch.removeprefix("b4/")
+    for name, branch, series in entries:
         fiche = read_fiche(os.path.join(workspace, f"{name}.md"))
-        series = read_series(repo, branch)
         sent = max(series["sent"]) if series and series["sent"] else 0
         git_status = f"V{sent} SENT" if sent else "DRAFT"
         status = (fiche or {}).get("status") or git_status

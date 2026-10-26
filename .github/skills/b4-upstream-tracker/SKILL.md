@@ -47,6 +47,18 @@ Maintient une fiche Markdown par branche b4 (`b4/ups_mp13_clk_spi` → `ups_mp13
    - `LAST_SENT_NUM` = numéro de la dernière version envoyée (retirer la commande `--compare-to` si DRAFT).
 6. Créer la fiche, puis la résumer en quelques lignes à l'utilisateur.
 
+## Procédure : create hors b4
+
+Pour une série envoyée sans `b4 prep` (branche non `b4/*`, éventuellement dans un autre repo, ex. `~/Views/upstream_mp21/stm32`) : pas de `b4_status.py`, la fiche est remplie à la main.
+
+1. Repérer le repo et la branche (`git branch -vv`), la base (`git describe --tags`) et les commits propres à la branche.
+2. Retrouver l'envoi sur Patchwork (`/api/1.2/patches/?q=<sujet>&order=-date`) : msgid, date, série, état par projet, commentaires (réponses « Applied… »). Vérifier que l'envoi est bien le commit local (`git patch-id --stable` sur le commit et sur `https://patchwork.kernel.org/patch/<id>/mbox/`) et chercher une version plus récente.
+3. Si le commit est déjà dans le repo (`git branch -r --contains <hash>`, `git describe --contains`), le noter ; STATUS `MERGED` s'il est dans linux-next/mainline, `APPLIED` s'il est seulement accepté.
+4. Créer `<branche>.md` depuis le template avec, dans la zone `auto`, une ligne `| Suivi | manuel (hors b4) : ... |` en première ligne du tableau (marqueur lu par le dashboard), `Change-Id` = `-`, `Titre (cover)` = sujet du patch, `Révision courante` = `v<n> (dernière envoyée : v<n>)` et une ligne par version dans « Versions envoyées » (`| vN | date | \`msgid\` | lore | Patchwork |`) : le dashboard en lit msgid, titre et révision pour interroger Patchwork.
+5. Adapter COMMANDS : pas de `b4 prep`/`b4 send` ; `checkpatch`, `git format-patch -v<n+1> --base=auto`, `git send-email --dry-run`, `b4 am`/`b4 mbox`, `b4 prep --enroll <base>` pour passer sous b4.
+6. Relancer le dashboard : une fiche marquée « manuel » sans branche `b4/*` y est ajoutée automatiquement.
+7. Refresh d'une telle fiche : refaire les étapes 2 et 3 à la main (le script `b4_status.py` ne s'applique pas).
+
 ## Procédure : refresh
 
 1. Relancer le script, remplacer uniquement la zone `auto`, mettre à jour `Dernière MAJ`.
