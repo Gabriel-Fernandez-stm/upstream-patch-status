@@ -73,3 +73,7 @@ b4 ty --auto --dry-run                      # puis sans --dry-run (ou -S pour en
 
 - [ ] Récupérer l'Acked-by de Krzysztof sur 2/3 : `b4 trailers -u`
 - [ ] Finaliser la v2 (cover + changelog), puis `b4 send --reflect` avant l'envoi réel
+
+---
+
+[⬅ Previous](./UPSTREAM.md)
