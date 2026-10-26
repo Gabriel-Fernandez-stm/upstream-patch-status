@@ -68,3 +68,7 @@ b4 ty --auto --dry-run                      # puis sans --dry-run (ou -S pour en
 ## TODO
 
 - [ ] (à compléter)
+
+---
+
+[⬅ Previous](./UPSTREAM.md)

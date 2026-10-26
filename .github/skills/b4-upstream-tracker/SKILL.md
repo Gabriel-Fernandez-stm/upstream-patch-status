@@ -17,6 +17,7 @@ Maintient une fiche Markdown par branche b4 (`b4/ups_mp13_clk_spi` → `ups_mp13
 - Fiche d'une branche : [b4_status.py](./scripts/b4_status.py) (b4 + git + get_maintainer + API Patchwork)
 - Tableau de bord : [b4_dashboard.py](./scripts/b4_dashboard.py) (toutes les branches `b4/*`, sans checkout)
 - La zone entre `<!-- auto:begin -->` et `<!-- auto:end -->` est régénérée ; tout le reste (STATUS manuel, SOC, COMMENTS, COMMANDS, TODO) est du contenu utilisateur à préserver.
+- Chaque fiche se termine par le pied de page `[⬅ Previous](./UPSTREAM.md)` (retour au tableau de bord), après un `---`. À ajouter si absent lors d'un `refresh`, jamais en doublon ; toute nouvelle entrée de TODO s'insère avant ce pied de page.
 - Ne jamais lancer `b4 send`, `git push` ni changer de branche sans demande explicite.
 
 ## Procédure : dashboard
