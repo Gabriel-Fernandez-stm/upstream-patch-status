@@ -1,6 +1,6 @@
 # UPSTREAM — suivi des séries kernel STM32MP
 
-_Généré le 2026-10-26 16:20 par le skill `b4-upstream-tracker` — ne pas éditer à la main : `python3 .github/skills/b4-upstream-tracker/scripts/b4_dashboard.py`. STATUS, COMMENTS et TODO viennent des fiches ; versions envoyées et Patchwork viennent de b4 et Patchwork._
+_Généré le 2026-10-26 17:28 par le skill `b4-upstream-tracker` — ne pas éditer à la main : `python3 .github/skills/b4-upstream-tracker/scripts/b4_dashboard.py`. STATUS, COMMENTS et TODO viennent des fiches ; versions envoyées et Patchwork viennent de b4 et Patchwork._
 
 ## Vue d'ensemble
 
@@ -9,7 +9,7 @@ _Généré le 2026-10-26 16:20 par le skill `b4-upstream-tracker` — ne pas éd
 | STM32MP (commun) | 0 | 1 | 0 | 0 | 1 |
 | STM32MP13 | 1 | 1 | 0 | 0 | 2 |
 | STM32MP15 | 0 | 1 | 0 | 0 | 1 |
-| STM32MP21 | 0 | 0 | 0 | 0 | 0 |
+| STM32MP21 | 0 | 2 | 0 | 1 | 3 |
 | STM32MP25 | 1 | 2 | 0 | 0 | 3 |
 
 ## STM32MP (commun)
@@ -23,7 +23,7 @@ _Généré le 2026-10-26 16:20 par le skill `b4-upstream-tracker` — ne pas éd
 | Série | Titre (cover) | Version | STATUS | Patchwork (dernière version envoyée) | Dernier commentaire | TODO |
 |---|---|---|---|---|---|---|
 | [ups_mp13_clk_rng](./ups_mp13_clk_rng.md) | clk: stm32mp13: remove LSE from the RNG1 kernel clock sources | v1 (draft) | 📝 DRAFT | — | — | 4 |
-| [ups_mp13_clk_spi](./ups_mp13_clk_spi.md) | clk: stm32mp13: add the SPI1 to SPI5 bus clocks | v1 envoyée · v2 en cours | 📤 V1 SENT | [3×new](https://patchwork.kernel.org/series/1189542/) ⏳ · Acked-by×1 · 💬 1 | 2026-10-22 [v1] Krzysztof Kozlowski : Acked-by sur 2/3 (dt-bindings) | 2 |
+| [ups_mp13_clk_spi](./ups_mp13_clk_spi.md) | clk: stm32mp13: add the SPI1 to SPI5 bus clocks | v1 envoyée · v2 en cours | 📤 V1 SENT | [3×new](https://patchwork.kernel.org/series/1189542/) ⏳ · Acked-by×1 · 💬 1 | 2026-10-26 [v1] `b4 trailers -u` : Acked-by de Krzysztof intégré au commit 2/3 de `b4/ups… | 1 |
 
 ## STM32MP15
 
@@ -33,7 +33,11 @@ _Généré le 2026-10-26 16:20 par le skill `b4-upstream-tracker` — ne pas éd
 
 ## STM32MP21
 
-_Aucune série._
+| Série | Titre (cover) | Version | STATUS | Patchwork (dernière version envoyée) | Dernier commentaire | TODO |
+|---|---|---|---|---|---|---|
+| [ups_mp21_dt_optee](./ups_mp21_dt_optee.md) | arm64: dts: st: add optee interrupt on stm32mp211 | v1 envoyée | 📤 V1 SENT | [1×new](https://patchwork.kernel.org/series/1181386/) ⏳ | 2026-10-26 [v1] Gabriel Fernandez : aucun retour sur lore/Patchwork depuis l'envoi du 202… | 1 |
+| [ups_mp21_dt_rcc](./ups_mp21_dt_rcc.md) | arm64: dts: st: add RCC support for STM32MP21 | v1 envoyée | 📤 V1 SENT | [1×new](https://patchwork.kernel.org/series/1181385/) ⏳ | 2026-10-26 [v1] Gabriel Fernandez : aucun retour sur lore/Patchwork depuis l'envoi du 202… | 2 |
+| [ups_mp21_rcc_fix_last_clock_binding](./ups_mp21_rcc_fix_last_clock_binding.md) | clk: stm32: fix clock array size for STM32MP21 | v1 envoyée | 🟢 MERGED | [1×accepted](https://patchwork.kernel.org/series/1183920/) ⏳ · 💬 1 | 2026-10-12 [v1] Jerome Brunet : Applied to clk/linux.git (clk-pile), commit 57e9b2c11056 … | 0 |
 
 ## STM32MP25
 

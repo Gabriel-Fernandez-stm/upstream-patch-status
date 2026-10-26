@@ -25,8 +25,8 @@
 | # | Sujet | Commit | État Patchwork (v1, linux-clk) | Tags reçus |
 |---|---|---|---|---|
 | 1/3 | clk: stm32mp13: define the number of clocks in the driver | `dcb56a3945b5` | new (checks: pending) | - |
-| 2/3 | dt-bindings: clock: stm32mp13: add SPI1 to SPI5 bus clocks | `b671228de46b` | new (checks: pending) | - |
-| 3/3 | clk: stm32mp13: add the SPI1 to SPI5 bus clocks | `3c339a2ea5f2` | new (checks: pending) | - |
+| 2/3 | dt-bindings: clock: stm32mp13: add SPI1 to SPI5 bus clocks | `9c8ca20d62f4` | new (checks: pending) | Acked-by: Krzysztof Kozlowski |
+| 3/3 | clk: stm32mp13: add the SPI1 to SPI5 bus clocks | `55a1122e2701` | new (checks: pending) | - |
 
 ### Versions envoyées
 
@@ -37,6 +37,7 @@
 
 ## COMMENTS
 
+- 2026-10-26 [v1] `b4 trailers -u` : Acked-by de Krzysztof intégré au commit 2/3 de `b4/ups_mp13_clk_spi` (2/3 → `9c8ca20d62f4`, 3/3 réécrit → `55a1122e2701`, arbre inchangé)
 - 2026-10-22 [v1] Krzysztof Kozlowski : Acked-by sur 2/3 (dt-bindings) (https://patchwork.kernel.org/comment/27302252/)
 
 <!-- Ajouter en haut les plus récents : `- YYYY-MM-DD [vN] <qui> : résumé (lien lore)` -->
@@ -71,7 +72,7 @@ b4 ty --auto --dry-run                      # puis sans --dry-run (ou -S pour en
 
 ## TODO
 
-- [ ] Récupérer l'Acked-by de Krzysztof sur 2/3 : `b4 trailers -u`
+- [x] 2026-10-26 Récupérer l'Acked-by de Krzysztof sur 2/3 : `b4 trailers -u`
 - [ ] Finaliser la v2 (cover + changelog), puis `b4 send --reflect` avant l'envoi réel
 
 ---
